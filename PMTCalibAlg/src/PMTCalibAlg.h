@@ -35,12 +35,19 @@ class PMTCalibAlg: public AlgBase
 
     IDataMemMgr* m_memMgr;
     int m_totalPMT;
+    double m_waveLength;
     std::string m_CalibFile;
     std::string m_CalibStyle;
 
     // user's definition
-    std::string mCalibStyle;
+    double PECounter[20000];
+    double gain[20000];
+    int EvtCounter;
+    TH1F* darkCount;
+    TH1F* totalWaveCount;
     TH1F* chargeSpec[20000];
     bool LEDCalib(std::list<JM::CalibPMTChannel*> chhlist);
+    bool AmCCalib(std::list<JM::CalibPMTChannel*> chhlist);
+    bool ForceCalib(std::list<JM::CalibPMTChannel*> chhlist);
 };
 #endif
