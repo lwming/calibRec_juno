@@ -20,6 +20,7 @@ PMTCalibAlg::PMTCalibAlg(const std::string& name)
 {
     std::string base = getenv("JUNOTOP");
     m_CalibFile = "/junofs/users/zhangxt/20inch/rec/deconvolution/testSvcInput/PmtPrtData.txt";//FIXME
+    m_GainFile = "/junofs/users/zhangxt/github/calibRec_juno/PMTCalibAlg/src/gain.txt";//FIXME
     declProp("TotalPMT",m_totalPMT);
     declProp("CalbFile",m_CalibFile);
     declProp("CalibStyle",m_CalibStyle);
@@ -70,9 +71,12 @@ bool PMTCalibAlg::initialize()
       svc->attach("FILE1",totalWaveCount);
     }
     //input gain
-    ifstream gainFile(m_CalibFile);
+    std::ifstream gainFile(m_GainFile);
     double tmp;
-    while(
+    int i;
+    while(gainFile>>i>>tmp){
+      gainScale[i]=tmp;
+    }
 
     return true;
 }
@@ -91,8 +95,8 @@ bool PMTCalibAlg::execute()
     if(m_CalibStyle=="LED"){
       LEDCalib(chhlist);
     }
-    if(m_CalibStyle=="AmC"){
-      AmCCalib(chhlist);
+    if(m_CalibStyle=="Evt"){
+      EventCalib(chhlist);
     }
     if(m_CalibStyle=="ForceTrigger"){
       EvtCounter++;
@@ -145,15 +149,16 @@ bool PMTCalibAlg::LEDCalib(std::list<JM::CalibPMTChannel*> chhlist){
   }
   return true;
 }
-bool PMTCalibAlg::AmCCalib(std::list<JM::CalibPMTChannel*> chhlist){
-  std::list<JM::CalibPMTChannel*>::const_iterator chit = chhlist.begin();
+bool PMTCalibAlg::EventCalib(std::list<JM::CalibPMTChannel*> chhlist){
+  std::list<JM::CalibPMTChannel*>::iterator chit = chhlist.begin();
   while(chit != chhlist.end()){
-    const JM::CalibPMTChannel *calib = *chit++;
+    JM::CalibPMTChannel *calib = *chit++;
     unsigned int pmtId = calib -> pmtId();
     Identifier id = Identifier(pmtId);
     if(not CdID::is20inch(id)){
       continue;
     }
+    calib->setNPE(calib->nPE()*gainScale[pmtId]);
   }
   return true;
 }
