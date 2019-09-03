@@ -175,3 +175,15 @@ bool PMTCalibAlg::ForceCalib(std::list<JM::CalibPMTChannel*> chhlist){
   }
   return true;
 }
+bool PMTCalibAlg::RelDECalib(std::list<JM::CalibPMTChannel*> chhlist){
+  std::list<JM::CalibPMTChannel*>::const_iterator chit = chhlist.begin();
+  while(chit != chhlist.end()){
+    const JM::CalibPMTChannel *calib = *chit++;
+    unsigned int pmtId = calib -> pmtId();
+    Identifier id = Identifier(pmtId);
+    if(not CdID::is20inch(id)){
+      continue;
+    }
+  }
+  return true;
+}

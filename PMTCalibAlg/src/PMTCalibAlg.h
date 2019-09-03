@@ -50,5 +50,6 @@ class PMTCalibAlg: public AlgBase
     bool LEDCalib(std::list<JM::CalibPMTChannel*> chhlist);
     bool EventCalib(std::list<JM::CalibPMTChannel*> chhlist);
     bool ForceCalib(std::list<JM::CalibPMTChannel*> chhlist);
+    bool RelDECalib(std::list<JM::CalibPMTChannel*> chhlist);
 };
 #endif
