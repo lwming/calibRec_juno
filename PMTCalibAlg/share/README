@@ -1,0 +1,2 @@
+script.C is used to calculate relative detection efficiency
+gen.C is used to generate simulated raw LED calibration SPE charge spectra
