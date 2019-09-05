@@ -11,6 +11,7 @@ use EvtNavigator v* DataModel
 use DataRegistritionSvc v* DataModel
 use Identifier v* Detector
 use RootIOSvc      v*  RootIO
+use PMTCalibSvc v*
 
 
 library PMTCalibAlg *.cc

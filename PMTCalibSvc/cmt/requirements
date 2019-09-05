@@ -11,7 +11,10 @@ macro_append ROOT_linkopts " -Wl,--as-needed "
 
 
 macro_append Boost_linkopts " -lboost_filesystem -lboost_system "
+<<<<<<< HEAD
 macro_append ROOT_linkopts " -lUnuran "
+=======
+>>>>>>> feature-ym
 
 apply_pattern install_python_modules
 apply_pattern install_more_includes more="PMTCalibSvc"

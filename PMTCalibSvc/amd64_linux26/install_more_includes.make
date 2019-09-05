@@ -3,7 +3,11 @@
 #====================================
 #  Document install_more_includes
 #
+<<<<<<< HEAD
 #   Generated Thu Sep  5 15:52:18 2019  by huangx
+=======
+#   Generated Thu Sep  5 17:55:00 2019  by yumiao
+>>>>>>> feature-ym
 #
 #====================================
 

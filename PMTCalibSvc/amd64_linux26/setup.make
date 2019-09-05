@@ -7,18 +7,28 @@
 # use Boost v* Externals (no_version_directory)
 #
 # Selection :
+<<<<<<< HEAD
 use CMT v1r26 (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Release/J17v1r1/ExternalLibs)
 use ROOT v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v1r1-Pre1/ExternalInterface)
 use Python v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v1r1-Pre1/ExternalInterface)
 use Boost v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v1r1-Pre1/ExternalInterface)
 use SniperPolicy v0  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v1r1-Pre1/sniper)
 use SniperKernel v2  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v1r1-Pre1/sniper)
+=======
+use CMT v1r26 (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-branch/ExternalLibs)
+use ROOT v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface)
+use Python v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface)
+use Boost v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface)
+use SniperPolicy v0  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper)
+use SniperKernel v2  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper)
+>>>>>>> feature-ym
 ----------> tags
 CMTv1 (from CMTVERSION)
 CMTr26 (from CMTVERSION)
 CMTp0 (from CMTVERSION)
 Linux (from uname) package [CMT] implies [Unix]
 amd64_linux26 (from CMTCONFIG)
+<<<<<<< HEAD
 MyProject_no_config (from PROJECT) excludes [MyProject_config]
 MyProject_root (from PROJECT) excludes [MyProject_no_root]
 MyProject_cleanup (from PROJECT) excludes [MyProject_no_cleanup]
@@ -26,6 +36,22 @@ MyProject_scripts (from PROJECT) excludes [MyProject_no_scripts]
 MyProject_prototypes (from PROJECT) excludes [MyProject_no_prototypes]
 MyProject_with_installarea (from PROJECT) excludes [MyProject_without_installarea]
 MyProject_without_version_directory (from PROJECT) excludes [MyProject_with_version_directory]
+=======
+calibRec_juno_no_config (from PROJECT) excludes [calibRec_juno_config]
+calibRec_juno_root (from PROJECT) excludes [calibRec_juno_no_root]
+calibRec_juno_cleanup (from PROJECT) excludes [calibRec_juno_no_cleanup]
+calibRec_juno_scripts (from PROJECT) excludes [calibRec_juno_no_scripts]
+calibRec_juno_prototypes (from PROJECT) excludes [calibRec_juno_no_prototypes]
+calibRec_juno_with_installarea (from PROJECT) excludes [calibRec_juno_without_installarea]
+calibRec_juno_without_version_directory (from PROJECT) excludes [calibRec_juno_with_version_directory]
+offline_no_config (from PROJECT) excludes [offline_config]
+offline_root (from PROJECT) excludes [offline_no_root]
+offline_cleanup (from PROJECT) excludes [offline_no_cleanup]
+offline_scripts (from PROJECT) excludes [offline_no_scripts]
+offline_prototypes (from PROJECT) excludes [offline_no_prototypes]
+offline_with_installarea (from PROJECT) excludes [offline_without_installarea]
+offline_without_version_directory (from PROJECT) excludes [offline_with_version_directory]
+>>>>>>> feature-ym
 sniper_no_config (from PROJECT) excludes [sniper_config]
 sniper_root (from PROJECT) excludes [sniper_no_root]
 sniper_cleanup (from PROJECT) excludes [sniper_no_cleanup]
@@ -40,6 +66,7 @@ ExternalInterface_scripts (from PROJECT) excludes [ExternalInterface_no_scripts]
 ExternalInterface_prototypes (from PROJECT) excludes [ExternalInterface_no_prototypes]
 ExternalInterface_without_installarea (from PROJECT) excludes [ExternalInterface_with_installarea]
 ExternalInterface_without_version_directory (from PROJECT) excludes [ExternalInterface_with_version_directory]
+<<<<<<< HEAD
 MyProject (from PROJECT)
 offline_no_config (from PROJECT) excludes [offline_config]
 offline_root (from PROJECT) excludes [offline_no_root]
@@ -64,3 +91,15 @@ Unix (from package CMT) excludes [WIN32 Win32]
 # Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v1r1-Pre1/offline from ProjectPath
 # Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v1r1-Pre1/sniper from ProjectPath
 # Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v1r1-Pre1/ExternalInterface from ProjectPath
+=======
+calibRec_juno (from PROJECT)
+x86_64 (from package CMT)
+sl69 (from package CMT)
+gcc494 (from package CMT)
+Unix (from package CMT) excludes [WIN32 Win32]
+----------> CMTPATH
+# Add path /junofs/users/yumiao/reconstruction/dev_juno/git_repo/calibRec_juno from initialization
+# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline from ProjectPath
+# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper from ProjectPath
+# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface from ProjectPath
+>>>>>>> feature-ym
