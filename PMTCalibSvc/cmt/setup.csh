@@ -1,7 +1,7 @@
 # echo "setup PMTCalibSvc v0 in /junofs/users/yumiao/reconstruction/dev_juno/git_repo/calibRec_juno"
 
 if ( $?CMTROOT == 0 ) then
-  setenv CMTROOT /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Release/J17v1r1/ExternalLibs/CMT/v1r26
+  setenv CMTROOT /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-branch/ExternalLibs/CMT/v1r26
 endif
 source ${CMTROOT}/mgr/setup.csh
 set cmtPMTCalibSvctempfile=`${CMTROOT}/mgr/cmt -quiet build temporary_name`

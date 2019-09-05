@@ -12,8 +12,15 @@ S'../../../PMTCalibSvc/python/PMTCalibSvc/__init__.py'
 p6
 S'../../InstallArea/python/PMTCalibSvc/__init__.py'
 p7
-ssS'../../../PMTCalibSvc/amd64_linux26/libPMTCalibSvc.so'
+ssS'../../PMTCalibSvc/PMTCalibSvc'
 p8
+(dp9
+S'../../../PMTCalibSvc/PMTCalibSvc/PMTCalibSvc.h'
+p10
+S'../../InstallArea/include/PMTCalibSvc/PMTCalibSvc.h'
+p11
+ssS'../../../PMTCalibSvc/amd64_linux26/libPMTCalibSvc.so'
+p12
 S'../../InstallArea/amd64_linux26/lib/libPMTCalibSvc.so'
-p9
+p13
 ssb.
