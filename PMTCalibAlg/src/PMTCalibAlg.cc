@@ -12,6 +12,7 @@
 #include "Identifier/CdID.h"
 
 #include "PMTCalibSvc/PMTCalibSvc.h"
+using namespace std;
 
 
 DECLARE_ALGORITHM(PMTCalibAlg);
@@ -82,17 +83,30 @@ bool PMTCalibAlg::initialize()
     }
 
 
-    // develop by miao
+
+
+    /*************** develop by miao***************/
+
     // reconstruct pmtcalib svc
     SniperPtr<PMTCalibSvc> calSvc(getParent(), "PMTCalibSvc");
     if(calSvc.invalid()) {
         LogError <<  "Failed to get PMTCalibSvc instance!" << std::endl;
         return false;
     }
-
+    
+    // initialize channel correction data
+    relaDE = calSvc->getRelativeDE();
     gain = calSvc->getGain();
-    for(int i=0;i<10;i++){std::cout << gain[i] << std::endl;}
+    toffset = calSvc->getTimeOffset();
+    darkrate = calSvc->getDarkRate();
 
+    /***********************************************/
+
+    m_calib = svc->bookTree("CALIBEVT","simple output of calibration data");
+    m_calib -> Branch("Charge", &m_charge);
+    m_calib -> Branch("Time", &m_time);
+    m_calib -> Branch("PMTID", &m_pmtId);
+    m_calib -> Branch("TotalPE", &m_totalpe, "TotalPE/F");
 
 
     return true;
@@ -102,7 +116,14 @@ bool PMTCalibAlg::execute()
 {
     
   LogDebug << "---------------------------------------" << std::endl;
-/*  JM::EvtNavigator* nav = m_buf->curEvt(); 
+  m_pmtId.clear();
+  m_charge.clear();
+  m_time.clear();
+  m_totalpe = 0;
+
+  JM::EvtNavigator* nav = m_buf->curEvt(); 
+
+  std::list<JM::CalibPMTChannel*> cpcl;//CalibPMTChannel list
 
   // read CalibHit data
     JM::CalibHeader* chcol =(JM::CalibHeader*) nav->getHeader("/Event/Calib"); 
@@ -120,6 +141,7 @@ bool PMTCalibAlg::execute()
       ForceCalib(chhlist);
     }
 
+    int m_channel = 0;
     std::list<JM::CalibPMTChannel*>::const_iterator chit = chhlist.begin();
     while(chit != chhlist.end()){
     
@@ -128,27 +150,59 @@ bool PMTCalibAlg::execute()
         unsigned int pmtId = calib -> pmtId();
         Identifier id  = Identifier(pmtId);
 
+	    unsigned int detID = CdID::id(static_cast<unsigned int>(pmtId));
         if(not CdID::is20inch(id)) {
             continue;
         }
+
+        std::vector<double> time;
+        std::vector<double> charge;
+
+        time = calib->time();
+        charge = calib->charge();
         
         double nPE = calib->nPE();
         double firstHitTime = calib -> firstHitTime();
+        
+        m_pmtId.push_back(detID);
+        firstHitTime -= toffset[m_channel];
+        m_time.push_back(firstHitTime );
+    
+        JM::CalibPMTChannel* cpc = new JM::CalibPMTChannel;
+        cpc->setNPE(nPE);
+        cpc->setFirstHitTime(firstHitTime);
+        cpc->setPmtId(pmtId);
+        cpc->setTime(time);
+        cpc->setCharge(charge);
+        cpcl.push_back(cpc);
+
+     }
+
+    m_calib -> Fill();
+    
+    JM::CalibEvent* ce = new JM::CalibEvent;
+    ce->setCalibPMTCol(cpcl);
+    JM::CalibHeader* ch = new JM::CalibHeader;
+    ch->setEvent(ce);
+
+    nav->addHeader("/Event/Calib", ch);
+
+    LogDebug << "End of the PMT channel correction" << std::endl;
 
 
-    }
     LogInfo << "Done to read CalibPMT " << std::endl;
-*/
+
     return true;
 }
 
 bool PMTCalibAlg::finalize()
 {
-    /*
+   /* 
   for(int i=0;i<m_totalPMT;i++){
     darkCount->SetBinContent(i+1,PECounter[i]);
     totalWaveCount->SetBinContent(i+1,EvtCounter);
   }
+
 */
   return true;
 }
