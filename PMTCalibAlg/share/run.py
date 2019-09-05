@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-# Author: miaoyu@ihep.ac.cn
-# Sep, 2019
+# Author: yuzy@ihep.ac.cn
+# Oct 13, 2016
 
 
 import Sniper
@@ -16,8 +16,8 @@ def get_parser():
 
     parser = argparse.ArgumentParser(description='Waveform Reconstrtion.')
     parser.add_argument("--evtmax", type=int, default=-1, help='events to be processed')
-    parser.add_argument("--input", default="sample_calib.root", help="input file name")
-    parser.add_argument("--output", default="sample_rec.root", help="output file name")
+    parser.add_argument("--input", default="sample_elecsim.root", help="input file name")
+    parser.add_argument("--output", default="sample_calib.root", help="output file name")
     parser.add_argument("--loglevel", default="Info",
                             choices=["Test", "Debug", "Info", "Warn", "Error", "Fatal"],
                             )
@@ -48,10 +48,13 @@ if __name__ == "__main__":
 
     # Create IO Svc
     import RootIOSvc
-    roSvc = task.createSvc("RootOutputSvc/OutputSvc")
-    roSvc.property("OutputStreams").set({"/Event/Rec": "recOut.root", "/Event/Calib":"recOut.root"})
     inputsvc = task.createSvc("RootInputSvc/InputSvc")
     if args.input.find('list') > -1:
+
+    # Create PMTCalib Svc
+    import PMTCalibSvc
+    calibsvc = task.createSvc("PMTCalibSvc");
+	
 	arr = []
         file1 = open(args.input)
         for line in file1 :
@@ -60,10 +63,6 @@ if __name__ == "__main__":
 	inputsvc.property("InputFile").set(arr)
     else:
         inputsvc.property("InputFile").set([args.input])
-
-    # Create PMTCalib Svc
-    import PMTCalibSvc
-    calibsvc = task.createSvc("PMTCalibSvc");
 
     # Create RoOT Writer
     import RootWriter
