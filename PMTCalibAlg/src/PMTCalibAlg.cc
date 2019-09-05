@@ -11,6 +11,9 @@
 #include "Event/CalibPMTChannel.h"
 #include "Identifier/CdID.h"
 
+#include "PMTCalibSvc/PMTCalibSvc.h"
+
+
 DECLARE_ALGORITHM(PMTCalibAlg);
 
 PMTCalibAlg::PMTCalibAlg(const std::string& name)
@@ -78,6 +81,20 @@ bool PMTCalibAlg::initialize()
       gainScale[i]=tmp;
     }
 
+
+    // develop by miao
+    // reconstruct pmtcalib svc
+    SniperPtr<PMTCalibSvc> calSvc(getParent(), "PMTCalibSvc");
+    if(calSvc.invalid()) {
+        LogError <<  "Failed to get PMTCalibSvc instance!" << std::endl;
+        return false;
+    }
+
+    gain = calSvc->getGain();
+    for(int i=0;i<10;i++){std::cout << gain[i] << std::endl;}
+
+
+
     return true;
 }
 
@@ -85,7 +102,7 @@ bool PMTCalibAlg::execute()
 {
     
   LogDebug << "---------------------------------------" << std::endl;
-  JM::EvtNavigator* nav = m_buf->curEvt(); 
+/*  JM::EvtNavigator* nav = m_buf->curEvt(); 
 
   // read CalibHit data
     JM::CalibHeader* chcol =(JM::CalibHeader*) nav->getHeader("/Event/Calib"); 
@@ -121,17 +138,18 @@ bool PMTCalibAlg::execute()
 
     }
     LogInfo << "Done to read CalibPMT " << std::endl;
-
+*/
     return true;
 }
 
 bool PMTCalibAlg::finalize()
 {
+    /*
   for(int i=0;i<m_totalPMT;i++){
     darkCount->SetBinContent(i+1,PECounter[i]);
     totalWaveCount->SetBinContent(i+1,EvtCounter);
   }
-
+*/
   return true;
 }
 
