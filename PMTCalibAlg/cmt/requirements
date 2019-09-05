@@ -11,8 +11,9 @@ use EvtNavigator v* DataModel
 use DataRegistritionSvc v* DataModel
 use Identifier v* Detector
 use RootIOSvc      v*  RootIO
+use PMTCalibSvc v*
 
 
-library Deconvolution *.cc
-apply_pattern linker_library library=Deconvolution
+library PMTCalibAlg *.cc
+apply_pattern linker_library library=PMTCalibAlg
 
