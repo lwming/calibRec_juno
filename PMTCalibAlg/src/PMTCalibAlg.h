@@ -51,5 +51,14 @@ class PMTCalibAlg: public AlgBase
     bool EventCalib(std::list<JM::CalibPMTChannel*> chhlist);
     bool ForceCalib(std::list<JM::CalibPMTChannel*> chhlist);
     bool RelDECalib(std::list<JM::CalibPMTChannel*> chhlist);
+    
+  private:
+    std::vector<int> pmtID;
+    std::vector<double> relaDE;
+    std::vector<double> gain;
+    std::vector<double> toffset;
+    std::vector<double> darkrate;
+
 };
 #endif
+
