@@ -5,6 +5,7 @@
 #include <SniperKernel/AlgBase.h>
 #include <BufferMemMgr/IDataMemMgr.h>
 #include "TH1F.h"
+#include "TTree.h"
 #include <fstream>
 #include <string>
 #include "EvtNavigator/NavBuffer.h"
@@ -51,6 +52,12 @@ class PMTCalibAlg: public AlgBase
     bool EventCalib(std::list<JM::CalibPMTChannel*> chhlist);
     bool ForceCalib(std::list<JM::CalibPMTChannel*> chhlist);
     bool RelDECalib(std::list<JM::CalibPMTChannel*> chhlist);
+
+    TTree* m_calib;
+    std::vector<float> m_charge;
+    std::vector<float> m_time;
+    std::vector<int> m_pmtId;
+    float m_totalpe;
     
   private:
     std::vector<int> pmtID;
