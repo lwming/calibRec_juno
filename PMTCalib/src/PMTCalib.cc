@@ -37,7 +37,7 @@ PMTCalib::PMTCalib(const string& name): AlgBase(name)
 	, m_totalPMT(17746)
 	, m_threshold(20)
 	, m_tempH(0)
-	, m_store(0)
+	, m_store(1)
 {
     declProp("TotalPMT", m_totalPMT);
     declProp("CalibFile", m_CalibFile); 
@@ -60,8 +60,13 @@ bool PMTCalib::initialize(){
 		LogError<<"Only CD 20inch PMT could be processed."<<endl;
 		return false;	
 	}
-	if(m_step==2){
-		LogInfo<<"The PMT waveform calibration is running. SPE waveform will be averaged and converted to the frequency domain."<<endl;
+
+    cout << ">>>>>>>>> initialize test node <<<<<<<<<<" << endl;
+
+//	if(m_step==2){
+		//LogInfo<<"The PMT waveform calibration is running. SPE waveform will be averaged and converted to the frequency domain."<<endl;
+		LogInfo<<"The PMT spe average waveform is generating. SPE waveform will be averaged and converted to the frequency domain."<<endl;
+
 		for(int i=0;i<m_totalPMT;i++){
 			ostringstream out1;	
 			out1<<"PMTID_"<<i<<"_SPERE";
@@ -76,7 +81,7 @@ bool PMTCalib::initialize(){
 			m_rw->attach("FILE1", m_SPEIM[i]);
 			if(m_store)m_rw->attach("FILE1",m_meanWaveform[i]);
 		}
-		
+/*		
 		ifstream in1(m_CalibFile.c_str());
 		for(int i=0;i<m_totalPMT;i++){
 			if(!in1){
@@ -90,7 +95,8 @@ bool PMTCalib::initialize(){
 			m_intesigma.insert(pair<int, double>(id,intesigma));
 		}
 		in1.close();
-	}
+//	}*/
+    /*
 	else if(m_step==1){
 		LogInfo<<"The PMT waveform calibration is running. SPE waveforms will be integrated and fit, to get a proper cut for step 2"<<endl;
 		output1.open(m_CalibFile.c_str());
@@ -101,15 +107,17 @@ bool PMTCalib::initialize(){
 			m_rw->attach("FILE1", m_Integral[i]);
 		}
 	}
+    
 	else{
 		LogError<<"Unknown calibration configuration. Please check it."<<endl;
 		LogError<<"Step 1 means to calibrate the mean waveform integral, for the s.p.e. selection."<<endl;
 		LogError<<"Step 2 means to average the single p.e. waveform with the integral cut."<<endl;
 		return false;
 	}
+    */
 	return true;
 }
-
+/*
 double PMTCalib::integral(JM::ElecFeeChannel& channel){ // specified for J16v2
 	vector<unsigned int>& adc = channel.adc();
 	double baseline=0;
@@ -123,9 +131,10 @@ double PMTCalib::integral(JM::ElecFeeChannel& channel){ // specified for J16v2
 	}
 	return inte;
 }
-
+*/
 
 bool PMTCalib::execute(){
+    
 	LogDebug << "start PMT waveform unfolding" << endl;
     	SniperDataPtr<JM::NavBuffer> navBuf(*getParent(),"/Event");
     	JM::EvtNavigator* nav = navBuf->curEvt();
@@ -141,27 +150,31 @@ bool PMTCalib::execute(){
             		continue;
         	}
 		int pmtID = it->first;
-		if(m_step==1){
-			double inte = integral(channel);
-			m_Integral[pmtID]->Fill(inte);
-		}
-		else{
-			double inte = integral(channel);
-			double gain = (m_inte.find(pmtID))->second;
-			double gainsigma = (m_intesigma.find(pmtID))->second;
-			if(inte>gain-1.5*gainsigma&&inte<gain+1.5*gainsigma){ // specified for J16v2
+//        if(m_step==1){
+//			double inte = integral(channel);
+//			m_Integral[pmtID]->Fill(inte);
+//		}
+//		else{
+//			double inte = integral(channel);
+//			double gain = (m_inte.find(pmtID))->second;
+//			double gainsigma = (m_intesigma.find(pmtID))->second;
+//			if(inte>gain-1.5*gainsigma&&inte<gain+1.5*gainsigma){ // specified for J16v2
+            
 				m_stat[pmtID] += 1.;
 				double baseline =0;
 				for(int i=0;i<200;i++) baseline+=(channel.adc())[i];
 				baseline/=200.;
 				for(int i=0;i<m_length&&i<channel.adc().size();i++)
-					m_meanWaveform[pmtID]->SetBinContent(i+1,m_meanWaveform[pmtID]->GetBinContent(i+1)+(channel.adc())[i]-baseline);
-			}
-		}
+                {m_meanWaveform[pmtID]->SetBinContent(i+1,m_meanWaveform[pmtID]->GetBinContent(i+1)+(channel.adc())[i]-baseline);
+                 cout << "PMTID: " << pmtID <<" " << channel.adc()[i]  << endl;}
+	//		}
+	//	}
 	}
+        
 	return true;
 }
 bool PMTCalib::finalize(){
+    /*
 	if(m_step==1){
 		for(int i=0;i<m_totalPMT;i++){
 			if(m_Integral[i]->GetEntries()>0){
@@ -177,27 +190,29 @@ bool PMTCalib::finalize(){
 		output1.close();
 	}
 	else{
-		for(int i=0;i<m_totalPMT;i++){
+*/	
+	
+        for(int i=0;i<m_totalPMT;i++){
 			m_meanWaveform[i]->Scale(1./m_stat[i]);
 			delete TVirtualFFT::GetCurrentTransform();
-	    		TVirtualFFT::SetTransform(0);
+	    	TVirtualFFT::SetTransform(0);
 			m_tempH = m_meanWaveform[i]->FFT(m_tempH, "MAG");
 			std::vector<double> re_full_vec(m_length);
-    			std::vector<double> im_full_vec(m_length);
-		    	double *re_full = &re_full_vec.front();
-    			double *im_full = &im_full_vec.front();
-    			for(int j=0;j<m_length;j++){
-        			re_full[j] = 0;
-        			im_full[j] = 0;
-    			}
-    			TVirtualFFT *fft = TVirtualFFT::GetCurrentTransform();
-    			fft->GetPointsComplex(re_full,im_full);
+    		std::vector<double> im_full_vec(m_length);
+		    double *re_full = &re_full_vec.front();
+    		double *im_full = &im_full_vec.front();
+    		for(int j=0;j<m_length;j++){
+        		re_full[j] = 0;
+        		im_full[j] = 0;
+    		}
+    		TVirtualFFT *fft = TVirtualFFT::GetCurrentTransform();
+    		fft->GetPointsComplex(re_full,im_full);
 			for(int j=0;j<400&&j<m_length;j++){
 				m_SPERE[i]->SetBinContent(j+1,re_full[j]);
 				m_SPEIM[i]->SetBinContent(j+1,im_full[j]);
 			}
 		}
-	}
+//	}
 	
         return true;
 }

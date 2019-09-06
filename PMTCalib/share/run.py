@@ -17,13 +17,13 @@ def get_parser():
     parser = argparse.ArgumentParser(description='Waveform Reconstrtion.')
     parser.add_argument("--evtmax", type=int, default=-1, help='events to be processed')
     parser.add_argument("--input", default="sample_elecsim.root", help="input file name")
-    parser.add_argument("--output", default="sample_calib.root", help="output file name")
+    parser.add_argument("--output", default="SpeAvgWaveform.root", help="output file name")
     parser.add_argument("--loglevel", default="Info",
                             choices=["Test", "Debug", "Info", "Warn", "Error", "Fatal"],
                             )
     parser.add_argument("--step", default="1", type = int, help="Step of the calibration")
     parser.add_argument("--calibfile", default="Integral.txt", help="PMT spe integral file")
-    parser.add_argument("--store", default="0", type = int, help="Store the average spe waveform or not")
+    parser.add_argument("--store", default="1", type = int, help="Store the average spe waveform or not")
     return parser
 
 DATA_LOG_MAP = {"Test":0, "Debug":2, "Info":3, "Warn":4, "Error":5, "Fatal":6 }
@@ -34,7 +34,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     task = Sniper.Task("task")
-    task.asTop()
     task.setEvtMax(args.evtmax)
     task.setLogLevel(DATA_LOG_MAP[args.loglevel])
 
