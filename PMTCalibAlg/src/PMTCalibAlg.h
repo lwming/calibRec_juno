@@ -39,12 +39,10 @@ class PMTCalibAlg: public AlgBase
     double m_waveLength;
     std::string m_CalibFile;
     std::string m_CalibStyle;
-    std::string m_GainFile;
 
     // user's definition
     double PECounter[20000];
     double gainScale[20000];
-    int EvtCounter;
     TH1F* darkCount;
     TH1F* totalWaveCount;
     TH1F* chargeSpec[20000];
