@@ -1,0 +1,16 @@
+package TimeCorrAlg
+
+use SniperKernel v*
+use ROOT v* Externals
+use Boost v* Externals
+use RootWriter     v*   SniperSvc
+use EvtNavigator v* DataModel
+use DataRegistritionSvc v* DataModel
+use ElecEvent v* DataModel
+
+use Geometry v* Detector
+use Identifier v* Detector
+
+library TimeCorrAlg *.cc
+apply_pattern linker_library library=TimeCorrAlg
+
