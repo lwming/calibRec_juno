@@ -36,19 +36,20 @@ class PMTCalib: public AlgBase
         std::ofstream output1;
         JM::ElecFeeCrate* m_crate;
         std::string m_CalibFile;
-	TH1D* m_meanWaveform[20000];
+	    TH1D* m_meanWaveform[20000];
         TH1D* m_SPERE[20000];
         TH1D* m_SPEIM[20000];
-	TH1D* m_Integral[20000];
-	std::map< int, double> m_inte;
+	    TH1D* m_Integral[20000];
+	    std::map< int, double> m_inte;
         std::map< int, double> m_intesigma;
-	int m_length;
-	int m_step;
+	    int m_length;
+	    int m_step;
         int m_totalPMT;
         double m_threshold;
-	TH1* m_tempH;
-	double m_stat[20000];
-	int m_store;
+	    TH1* m_tempH;
+	    double m_stat[20000];
+	    int m_store;
+        double m_refT;
 };
 
 #endif

@@ -38,6 +38,7 @@ PMTCalib::PMTCalib(const string& name): AlgBase(name)
 	, m_threshold(20)
 	, m_tempH(0)
 	, m_store(1)
+    , m_refT(100)
 {
     declProp("TotalPMT", m_totalPMT);
     declProp("CalibFile", m_CalibFile); 
@@ -45,6 +46,7 @@ PMTCalib::PMTCalib(const string& name): AlgBase(name)
     declProp("Step",m_step);
     declProp("Length",m_length);
     declProp("Store",m_store);
+    declProp("ReferenceTime",m_refT);
 }
 
 PMTCalib::~PMTCalib(){}
@@ -61,7 +63,6 @@ bool PMTCalib::initialize(){
 		return false;	
 	}
 
-    cout << ">>>>>>>>> initialize test node <<<<<<<<<<" << endl;
 
 //	if(m_step==2){
 		//LogInfo<<"The PMT waveform calibration is running. SPE waveform will be averaged and converted to the frequency domain."<<endl;
@@ -150,6 +151,20 @@ bool PMTCalib::execute(){
             		continue;
         	}
 		int pmtID = it->first;
+
+/***************************developed by miaoyu@lxslc6.ihep.ac.cn*******************************/
+    // time alignment for each waveform
+
+//    double time = time_alignment(std::vector<double> adc);
+
+
+/***********************************************************************************************/
+
+
+
+
+
+
 //        if(m_step==1){
 //			double inte = integral(channel);
 //			m_Integral[pmtID]->Fill(inte);

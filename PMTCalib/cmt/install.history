@@ -9,4 +9,8 @@ S'../../../Calibration/PMTCalib/amd64_linux26/libPMTCalib.so'
 p4
 S'../../../InstallArea/amd64_linux26/lib/libPMTCalib.so'
 p5
+sS'../../../PMTCalib/amd64_linux26/libPMTCalib.so'
+p6
+S'../../InstallArea/amd64_linux26/lib/libPMTCalib.so'
+p7
 ssb.

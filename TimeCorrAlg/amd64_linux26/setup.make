@@ -33,6 +33,11 @@
 #   use Context v* DataModel (no_version_directory)
 #     use SniperPolicy v*  (no_version_directory)
 #     use ROOT v* Externals (no_version_directory)
+# use Geometry v* Detector (no_version_directory)
+#   use Identifier v* Detector (no_version_directory)
+#     use SniperKernel v*  (no_version_directory)
+#   use ROOT v* Externals (no_version_directory)
+# use Identifier v* Detector (no_version_directory)
 #
 # Selection :
 use CMT v1r26 (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-branch/ExternalLibs)
@@ -44,6 +49,8 @@ use Context v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J1
 use XmlObjDesc v0  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline) (no_auto_imports)
 use BaseEvent v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
 use SniperKernel v2  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper)
+use Identifier v0 Detector (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
+use Geometry v0 Detector (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
 use EDMUtil v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
 use ElecEvent v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
 use DataRegistritionSvc v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
