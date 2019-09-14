@@ -23,8 +23,9 @@ PMTCalibAlg::PMTCalibAlg(const std::string& name)
     m_waveLength(1250)
 {
     std::string base = getenv("JUNOTOP");
-    m_CalibFile = "/junofs/users/zhangxt/20inch/rec/deconvolution/testSvcInput/PmtPrtData.txt";//FIXME
-    m_GainFile = "/junofs/users/zhangxt/github/calibRec_juno/PMTCalibAlg/src/gain.txt";//FIXME
+    //m_CalibFile = "/junofs/users/zhangxt/20inch/rec/deconvolution/testSvcInput/PmtPrtData.txt";//FIXME
+    //m_CalibFile = "/junofs/users/zhangxt/github/calibRec_juno/PMTCalibAlg/src/gain.txt";//FIXME
+    m_CalibFile = "/junofs/users/zhangxt/github/calibRec_juno/PMTCalibAlg/share/output.txt";//FIXME
     declProp("TotalPMT",m_totalPMT);
     declProp("CalbFile",m_CalibFile);
     declProp("CalibStyle",m_CalibStyle);
@@ -59,31 +60,28 @@ bool PMTCalibAlg::initialize()
     if(m_CalibStyle=="LED"){
       for(int i=0;i<m_totalPMT;i++){
         TString chName=Form("ch%d_charge_spec",i);
-        chargeSpec[i]=new TH1F(chName,chName,100,0,5);
+        chargeSpec[i]=new TH1F(chName,chName,1200,-2,10);
         svc->attach("FILE1",chargeSpec[i]);
       }
     }
     //Dark Rate outputfile
     if(m_CalibStyle=="ForceTrigger"){
       darkCount=new TH1F("darkCount","darkCount",m_totalPMT,0,m_totalPMT);
-      totalWaveCount=new TH1F("totalWaveCount","totalWaveCount",m_totalPMT,0,m_totalPMT);
-      for(int i=0;i<m_totalPMT;i++){
-        PECounter[i]=0;
-      }
-      EvtCounter=0;
+      totalWaveCount=new TH1F("totalWaveCount","totalWaveCount",1,0,1);
+      //for(int i=0;i<m_totalPMT;i++){
+      //  PECounter[i]=0;
+      //}
       svc->attach("FILE1",darkCount);
       svc->attach("FILE1",totalWaveCount);
     }
     //input gain
-    std::ifstream gainFile(m_GainFile);
+    std::ifstream gainFile(m_CalibFile);
     double tmp;
+    double tmp1;
     int i;
-    while(gainFile>>i>>tmp){
-      gainScale[i]=tmp;
+    while(gainFile>>i>>tmp>>tmp1>>tmp){
+      gainScale[i]=tmp1;
     }
-
-
-
 
     /*************** develop by miao***************/
 
@@ -92,6 +90,21 @@ bool PMTCalibAlg::initialize()
     if(calSvc.invalid()) {
         LogError <<  "Failed to get PMTCalibSvc instance!" << std::endl;
         return false;
+    }
+
+    //save merged parameters
+    if(m_CalibStyle=="Merge"){
+      std::ifstream f(m_CalibFile);
+      unsigned int i=0;
+      double tmp1=0;
+      double tmp2=0;
+      double tmp3=0;
+      while(f>>i>>tmp1>>tmp2>>tmp3){
+        calSvc->setRelativeDE(i,tmp1);
+        calSvc->setGain(i,tmp1);
+        calSvc->setDarkRate(i,tmp1);
+      }
+      f.close();
     }
     
     // initialize channel correction data
@@ -137,7 +150,6 @@ bool PMTCalibAlg::execute()
       EventCalib(chhlist);
     }
     if(m_CalibStyle=="ForceTrigger"){
-      EvtCounter++;
       ForceCalib(chhlist);
     }
 
@@ -200,7 +212,6 @@ bool PMTCalibAlg::finalize()
    /* 
   for(int i=0;i<m_totalPMT;i++){
     darkCount->SetBinContent(i+1,PECounter[i]);
-    totalWaveCount->SetBinContent(i+1,EvtCounter);
   }
 
 */
@@ -235,6 +246,7 @@ bool PMTCalibAlg::EventCalib(std::list<JM::CalibPMTChannel*> chhlist){
   return true;
 }
 bool PMTCalibAlg::ForceCalib(std::list<JM::CalibPMTChannel*> chhlist){
+  totalWaveCount->Fill(0.5);
   std::list<JM::CalibPMTChannel*>::const_iterator chit = chhlist.begin();
   while(chit != chhlist.end()){
     const JM::CalibPMTChannel *calib = *chit++;
@@ -243,7 +255,8 @@ bool PMTCalibAlg::ForceCalib(std::list<JM::CalibPMTChannel*> chhlist){
     if(not CdID::is20inch(id)){
       continue;
     }
-    PECounter[pmtId]+=calib->nPE();
+    //PECounter[pmtId]+=calib->nPE();
+    darkCount->SetBinContent(pmtId+1,darkCount->GetBinContent(pmtId+1)+calib->nPE());
   }
   return true;
 }
