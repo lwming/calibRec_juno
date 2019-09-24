@@ -1,11 +1,11 @@
 ##############################
 ###      Floders     #########
 ##############################
-InstallArea
-*/amd64_linux26
-*/share/*txt
-*/share/*root
+InstallArea/
+Deconvolution/
+*/amd64_linux26/
+*/share/*.txt
+*/share/*.root
 *csv
 *.err.*
 *.out.*
-Deconvolution/
