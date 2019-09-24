@@ -3,3 +3,6 @@
 ##############################
 InstallArea
 PMTCalibSvc/amd64_linux26
+PMTCalibAlg/amd64_linux26
+PMTCalib/amd64_linux26
+TimeCorrAlg/amd64_linux26
