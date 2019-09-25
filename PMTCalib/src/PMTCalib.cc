@@ -146,6 +146,7 @@ bool PMTCalib::execute()
   LogDebug << "start PMT waveform unfolding" << endl;
   SniperDataPtr<JM::NavBuffer> navBuf(*getParent(), "/Event");
   JM::EvtNavigator* nav = navBuf->curEvt();
+  LogInfo << "EvtNav: " << nav << std::endl;
   JM::ElecHeader* eh =
       dynamic_cast<JM::ElecHeader*>(nav->getHeader("/Event/Elec"));
   JM::ElecEvent* ee = dynamic_cast<JM::ElecEvent*>(eh->event());
@@ -168,41 +169,68 @@ bool PMTCalib::execute()
       double gainsigma = (m_intesigma.find(pmtID))->second;
       if (inte > gain - 1.5 * gainsigma &&
           inte < gain + 1.5 * gainsigma) {  // specified for J16v2
-        m_stat[pmtID] += 1.;
         double baseline = 0;
         for (int i = 0; i < 50; i++) baseline += (channel.adc())[i];
         baseline /= 50.;
         // get maxbin
         int maxbin = -1;
-        double maxvalue = 1e20;
+        double maxvalue = -1e20;
         for (int i = 0; i < m_length && i < channel.adc().size(); i++) {
-          if (channel.adc()[i] < maxvalue) {
+          if (channel.adc()[i] > maxvalue) {
             maxbin = i;
             maxvalue = channel.adc()[i];
           }
         }
         // constant ratio timing
-        double ratio = baseline + (maxvalue - baseline) / 8.;
+        double ratio = baseline + (maxvalue - baseline) / 6.;
         int start = 0;
-        for (int i = maxbin; i > maxbin - 50 && i >= 2; i--) {
-          if (channel.adc()[i - 2] <= ratio && channel.adc()[i] >= ratio) {
+        for (int i = maxbin; i > maxbin - 50 && i >= 1; i--) {
+          if (channel.adc()[i - 1] <= ratio && channel.adc()[i] >= ratio) {
             start = i - 1;
             break;
           } else
             start = 0;
         }
+        // LogInfo << start << "\t" << maxbin << endl;
         if (start > 0) {
-          for (int i = start - 50; i < start - 50 + m_length; i++) {
-            double tmp = channel.adc()[i] - baseline;
-            if (i <= 0) tmp = 0;
+          m_stat[pmtID] += 1.;
+          double tmp = 0;
+
+          // timing 1
+          // for (int i = start - 100; i < start - 100 + m_length; i++) {
+          //  if (i >= 0 && i < m_length)
+          //    tmp = channel.adc()[i] - baseline;
+          //  else
+          //    tmp = 0;
+          //  m_meanWaveform[pmtID]->SetBinContent(
+          //      i - start + 100 + 1,
+          //      m_meanWaveform[pmtID]->GetBinContent(i - start + 100 + 1) +
+          // tmp);
+          //}
+
+          // timing 2
+          for (int i = 0; i < m_length; i++) {
+            if (start - 100 + i >= 0 && start - 100 + i < m_length)
+              tmp = channel.adc()[start - 100 + i] - baseline;
+            else
+              tmp = 0;
             m_meanWaveform[pmtID]->SetBinContent(
-                i - start + 50 + 1,
-                m_meanWaveform[pmtID]->GetBinContent(i - start + 50 + 1) + tmp);
+                i + 1, m_meanWaveform[pmtID]->GetBinContent(i + 1) + tmp);
           }
+
+          // no timing
           // for (int i = 0; i < m_length && i < channel.adc().size(); i++)
           //  m_meanWaveform[pmtID]->SetBinContent(
           //      i + 1, m_meanWaveform[pmtID]->GetBinContent(i + 1) +
           //                 (channel.adc())[i] - baseline);
+
+          // test part
+          // for (int i = 0; i < m_length && i < channel.adc().size(); i++)
+          //  m_meanWaveform[pmtID]->SetBinContent(
+          //      i + 1, /*m_meanWaveform[pmtID]->GetBinContent(i + 1) +*/
+          //      (channel.adc())[i] - baseline);
+          // TString titlename = Form("maxbin = %d, start = %d", maxbin, start);
+          // m_meanWaveform[pmtID]->SetTitle(titlename);
         }
       }
     }
