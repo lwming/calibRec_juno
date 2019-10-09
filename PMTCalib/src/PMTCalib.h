@@ -38,6 +38,7 @@ class PMTCalib : public AlgBase {
   TH1D* m_SPERE[20000];
   TH1D* m_SPEIM[20000];
   TH1D* m_Integral[20000];
+  TH1D* m_Counter;
   std::map<int, double> m_inte;
   std::map<int, double> m_intesigma;
   int m_length;

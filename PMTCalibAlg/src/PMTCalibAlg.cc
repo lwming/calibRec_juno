@@ -24,8 +24,7 @@ PMTCalibAlg::PMTCalibAlg(const std::string& name)
   // "/junofs/users/zhangxt/20inch/rec/deconvolution/testSvcInput/PmtPrtData.txt";//FIXME
   // m_CalibFile =
   // "/junofs/users/zhangxt/github/calibRec_juno/PMTCalibAlg/src/gain.txt";//FIXME
-  m_CalibFile =
-      "/junofs/users/zhangxt/github/calibRec_juno/PMTCalibAlg/share/output.txt";  // FIXME
+  m_CalibFile = "CalibPar.txt";  // FIXME
   declProp("TotalPMT", m_totalPMT);
   declProp("CalbFile", m_CalibFile);
   declProp("CalibMode", m_CalibMode);
@@ -40,6 +39,7 @@ bool PMTCalibAlg::initialize()
 {
 
   LogInfo << "Iinitializing..." << std::endl;
+  LogInfo << "Calib Mode: " << m_CalibMode << endl;
 
   SniperDataPtr<JM::NavBuffer> navBuf(getParent(), "/Event");
   // SniperDataPtr<JM::NavBuffer>  navBuf(getScope(), "/Event");//J17
@@ -56,7 +56,6 @@ bool PMTCalibAlg::initialize()
              << "enalbe it in your job option file." << std::endl;
     return false;
   }
-  LogInfo << "Calib Mode: " << m_CalibMode << endl;
   // LED & darkrate calib outputfile
   if (m_CalibMode == "calib") {
     for (int i = 0; i < m_totalPMT; i++) {
@@ -68,14 +67,6 @@ bool PMTCalibAlg::initialize()
     totalWaveCount = new TH1F("totalWaveCount", "totalWaveCount", 1, 0, 1);
     svc->attach("FILE2", darkCount);
     svc->attach("FILE2", totalWaveCount);
-  }
-  // input gain
-  std::ifstream gainFile(m_CalibFile);
-  double tmp;
-  double tmp1;
-  int i;
-  while (gainFile >> i >> tmp >> tmp1 >> tmp) {
-    gainScale[i] = tmp1;
   }
 
   /*************** develop by miao***************/
@@ -89,7 +80,9 @@ bool PMTCalibAlg::initialize()
 
   // save merged parameters
   if (m_CalibMode == "SavePar") {
-    std::ifstream f(m_CalibFile);
+    std::string f_CalibFile =
+        "/junofs/users/zhangxt/github/calibRec_juno/PMTCalibAlg/share/";
+    std::ifstream f(f_CalibFile + m_CalibFile);
     unsigned int i = 0;
     double tmp1 = 0;
     double tmp2 = 0;
@@ -100,6 +93,7 @@ bool PMTCalibAlg::initialize()
       calSvc->setDarkRate(i, tmp1);
     }
     f.close();
+    return true;
   }
 
   // initialize channel correction data
@@ -122,6 +116,11 @@ bool PMTCalibAlg::initialize()
 bool PMTCalibAlg::execute()
 {
 
+  if (m_CalibMode == "SavePar") {
+    LogInfo << "Saving merged parameters and skiping all events" << std::endl;
+    return true;
+  }
+
   LogDebug << "---------------------------------------" << std::endl;
   m_pmtId.clear();
   m_charge.clear();
@@ -129,7 +128,6 @@ bool PMTCalibAlg::execute()
   m_totalpe = 0;
 
   JM::EvtNavigator* nav = m_buf->curEvt();
-
   std::list<JM::CalibPMTChannel*> cpcl;  // CalibPMTChannel list
 
   // read CalibHit data
@@ -137,10 +135,6 @@ bool PMTCalibAlg::execute()
   const std::list<JM::CalibPMTChannel*>& chhlist =
       chcol->event()->calibPMTCol();
 
-  // LED source algorithm
-  if (m_CalibMode == "Evt") {
-    EventCalib(chhlist);
-  }
   // total evt count
   if (m_CalibMode == "calib") {
     totalWaveCount->Fill(0.5);
@@ -177,7 +171,7 @@ bool PMTCalibAlg::execute()
           darkCount->GetBinContent(CdID::module(id) + 1) + nPE);
     }
 
-    m_pmtId.push_back(detID);
+    m_pmtId.push_back(CdID::module(id));
     firstHitTime -= toffset[m_channel];
     m_time.push_back(firstHitTime);
 
@@ -208,20 +202,5 @@ bool PMTCalibAlg::execute()
 
 bool PMTCalibAlg::finalize()
 {
-  return true;
-}
-
-bool PMTCalibAlg::EventCalib(std::list<JM::CalibPMTChannel*> chhlist)
-{
-  std::list<JM::CalibPMTChannel*>::iterator chit = chhlist.begin();
-  while (chit != chhlist.end()) {
-    JM::CalibPMTChannel* calib = *chit++;
-    unsigned int pmtId = calib->pmtId();
-    Identifier id = Identifier(pmtId);
-    if (not CdID::is20inch(id)) {
-      continue;
-    }
-    calib->setNPE(calib->nPE() * gainScale[pmtId]);
-  }
   return true;
 }

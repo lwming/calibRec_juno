@@ -46,7 +46,6 @@ class PMTCalibAlg: public AlgBase
     TH1F* darkCount;
     TH1F* totalWaveCount;
     TH1F* chargeSpec[20000];
-    bool EventCalib(std::list<JM::CalibPMTChannel*> chhlist);
 
     TTree* m_calib;
     std::vector<float> m_charge;

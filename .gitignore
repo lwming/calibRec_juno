@@ -3,6 +3,8 @@
 ##############################
 InstallArea/
 Deconvolution/
+PMTCalib/share/run-sample-step2-*sh
+PMTCalib/share/sub.sh
 */amd64_linux26/
 */share/*.txt
 */share/*.root

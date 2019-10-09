@@ -49,7 +49,7 @@ void script()
   }
 
   // output as a txt
-  ofstream ofile("output.txt");
+  ofstream ofile("CalibPars.txt");
   for (int i = 0; i < Npmt; i++) {
     // for(int i=0;i<177;i++){
     ofile << i << "\t" << relaDE[i] << "\t" << gain[i] << "\t" << darkrate[i]
