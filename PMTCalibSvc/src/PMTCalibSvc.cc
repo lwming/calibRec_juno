@@ -99,7 +99,7 @@ void PMTCalibSvc::WriteTxt(){
 void PMTCalibSvc::WriteTxt(){
     LogDebug<<"writing text..."<<std::endl;
     std::ofstream myoutstream;
-    myoutstream.open((hx_DirPath+"/PmtPrtData2.txt").c_str(),std::ofstream::out);
+    myoutstream.open((hx_DirPath+"/PmtPrtData.txt").c_str(),std::ofstream::out);
     int vsize=hx_RelativeDEV.size();
     for (int i=0;i<vsize;i++){
         myoutstream<<i<<"    \t"<<hx_RelativeDEV.at(i)<<"    \t"<<hx_GainV.at(i)<<"    \t"<<hx_TimeOffsetV.at(i)<<"    \t"<<hx_DarkRateV.at(i)<<"    \t"<<std::endl;

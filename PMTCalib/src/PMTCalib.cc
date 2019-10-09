@@ -154,7 +154,8 @@ bool PMTCalib::execute()
   LogInfo << "EvtNav: " << nav << std::endl;
   JM::ElecHeader* eh =
       dynamic_cast<JM::ElecHeader*>(nav->getHeader("/Event/Elec"));
-  JM::ElecEvent* ee = dynamic_cast<JM::ElecEvent*>(eh->event());
+  //JM::ElecEvent* ee = dynamic_cast<JM::ElecEvent*>(eh->event());
+  JM::ElecEvent* ee = dynamic_cast<JM::ElecEvent*>(eh->event("JM::ElecEvent"));
   const JM::ElecFeeCrate& efc = ee->elecFeeCrate();
   m_crate = const_cast<JM::ElecFeeCrate*>(&efc);
   map<int, JM::ElecFeeChannel> feeChannels = m_crate->channelData();

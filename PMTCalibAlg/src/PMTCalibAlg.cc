@@ -24,9 +24,9 @@ PMTCalibAlg::PMTCalibAlg(const std::string& name)
   // "/junofs/users/zhangxt/20inch/rec/deconvolution/testSvcInput/PmtPrtData.txt";//FIXME
   // m_CalibFile =
   // "/junofs/users/zhangxt/github/calibRec_juno/PMTCalibAlg/src/gain.txt";//FIXME
-  m_CalibFile = "CalibPar.txt";  // FIXME
+  m_CalibFile = "CalibPars.txt";  // FIXME
   declProp("TotalPMT", m_totalPMT);
-  declProp("CalbFile", m_CalibFile);
+  declProp("CalibFile", m_CalibFile);
   declProp("CalibMode", m_CalibMode);
   declProp("WaveLength", m_waveLength);
 }

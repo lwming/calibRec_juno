@@ -5,7 +5,8 @@ void script()
 
   // FIXME merged files
   // TFile* inputfile = new TFile("toymc_calibCorr_user.root", "read");
-  TFile* inputfile = new TFile("sample_calibCorr_user.root", "read");
+  // TFile* inputfile = new TFile("sample_calibCorr_user.root", "read");
+  TFile* inputfile = new TFile("sample_calibCorr_user_v19.root", "read");
   TH1F* th[Npmt];
   TH1D* muth = new TH1D("muth", "Relative DE", Npmt, 0, Npmt);
   TH1D* gainth = new TH1D("gainth", "Gain", Npmt, 0, Npmt);
