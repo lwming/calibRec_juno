@@ -38,24 +38,29 @@
 #     use SniperKernel v*  (no_version_directory)
 #   use ROOT v* Externals (no_version_directory)
 # use Identifier v* Detector (no_version_directory)
+# use PMTCalibSvc v*  (no_version_directory)
+#   use SniperKernel v*  (no_version_directory)
+#   use ROOT v* Externals (no_version_directory)
+#   use Boost v* Externals (no_version_directory)
 #
 # Selection :
 use CMT v1r26 (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-branch/ExternalLibs)
-use ROOT v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface)
-use Python v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface)
-use Boost v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface)
-use SniperPolicy v0  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper)
-use Context v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
-use XmlObjDesc v0  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline) (no_auto_imports)
-use BaseEvent v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
-use SniperKernel v2  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper)
-use Identifier v0 Detector (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
-use Geometry v0 Detector (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
-use EDMUtil v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
-use ElecEvent v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
-use DataRegistritionSvc v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
-use EvtNavigator v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline)
-use RootWriter v0 SniperSvc (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper)
+use ROOT v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/ExternalInterface)
+use Python v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/ExternalInterface)
+use Boost v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/ExternalInterface)
+use SniperPolicy v0  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/sniper)
+use Context v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/offline)
+use XmlObjDesc v0  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/offline) (no_auto_imports)
+use BaseEvent v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/offline)
+use SniperKernel v2  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/sniper)
+use PMTCalibSvc v0  (/junofs/users/yumiao/reconstruction/dev_juno/git_repo/calibRec_juno)
+use Identifier v0 Detector (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/offline)
+use Geometry v0 Detector (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/offline)
+use EDMUtil v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/offline)
+use ElecEvent v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/offline)
+use DataRegistritionSvc v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/offline)
+use EvtNavigator v0 DataModel (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/offline)
+use RootWriter v0 SniperSvc (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/sniper)
 ----------> tags
 CMTv1 (from CMTVERSION)
 CMTr26 (from CMTVERSION)
@@ -97,6 +102,6 @@ gcc494 (from package CMT)
 Unix (from package CMT) excludes [WIN32 Win32]
 ----------> CMTPATH
 # Add path /junofs/users/yumiao/reconstruction/dev_juno/git_repo/calibRec_juno from initialization
-# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline from ProjectPath
-# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper from ProjectPath
-# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface from ProjectPath
+# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/offline from ProjectPath
+# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/sniper from ProjectPath
+# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre3/ExternalInterface from ProjectPath
