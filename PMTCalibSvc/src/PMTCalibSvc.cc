@@ -99,7 +99,7 @@ void PMTCalibSvc::WriteTxt(){
 void PMTCalibSvc::WriteTxt(){
     LogDebug<<"writing text..."<<std::endl;
     std::ofstream myoutstream;
-    myoutstream.open((hx_DirPath+"/PmtPrtData2.txt").c_str(),std::ofstream::out);
+    myoutstream.open((hx_DirPath+"/PmtPrtData.txt").c_str(),std::ofstream::out);
     int vsize=hx_RelativeDEV.size();
     for (int i=0;i<vsize;i++){
         myoutstream<<i<<"    \t"<<hx_RelativeDEV.at(i)<<"    \t"<<hx_GainV.at(i)<<"    \t"<<hx_TimeOffsetV.at(i)<<"    \t"<<hx_DarkRateV.at(i)<<"    \t"<<std::endl;
@@ -174,7 +174,7 @@ void PMTCalibSvc::ReadRoot(){
         hx_file=new TFile("/junofs/users/huangx/HXProject/MyProject/PMTCalibSvc/share/output.root","READ");
     }
     TH1D* hx_ChargeSpec;
-    for (int i=0;i<17746/*hx_ChargeSpecV.size()*/;i++){
+    for (int i=0;i<17613/*hx_ChargeSpecV.size()*/;i++){
         hx_ChargeSpec=(TH1D*)hx_file->Get(Form("ch%d_charge_spec",i));
         hx_ChargeSpecV.push_back(hx_ChargeSpec);
     }

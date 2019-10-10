@@ -50,7 +50,7 @@ if __name__ == "__main__":
     import RootIOSvc
     inputsvc = task.createSvc("RootInputSvc/InputSvc")
     if args.input.find('list') > -1:
-	
+
 	arr = []
         file1 = open(args.input)
         for line in file1 :
@@ -66,10 +66,10 @@ if __name__ == "__main__":
     rw = task.find("RootWriter")
     rw.property("Output").set({"FILE1": args.output})
 
-    #import PMTCalib 
-    Sniper.loadDll("libPMTCalib.so")
+    #import PMTCalib
+    Sniper.loadDll("/junofs/users/zhangxt/github/calibRec_juno/PMTCalib/amd64_linux26/libPMTCalib.so")
     pmtCalib=task.createAlg("PMTCalib")
-    pmtCalib.property("Step").set(args.step) 
+    pmtCalib.property("Step").set(args.step)
     pmtCalib.property("CalibFile").set(args.calibfile)
     pmtCalib.property("Store").set(args.store)
     task.show()

@@ -22,9 +22,9 @@ def get_parser():
     parser.add_argument("--loglevel", default="Info",
                             choices=["Test", "Debug", "Info", "Warn", "Error", "Fatal"],
                             )
-    parser.add_argument("--step", default="1", type = int, help="Step of the calibration")
-    parser.add_argument("--calibfile", default="Integral.txt", help="PMT spe integral file")
+    parser.add_argument("--calibfile", default="CalibPars.txt", help="PMT spe integral file")
     parser.add_argument("--store", default="0", type = int, help="Store the average spe waveform or not")
+    parser.add_argument("--calibmode", default="LED", help="Opration mode: LED, ForceTrigger, SavePar, Evt")
     return parser
 
 DATA_LOG_MAP = {"Test":0, "Debug":2, "Info":3, "Warn":4, "Error":5, "Fatal":6 }
@@ -73,7 +73,8 @@ if __name__ == "__main__":
     #rw = task.find("RootWriter")
     #rw.property("Output").set({"FILE1": args.output})
     rootwriter = task.createSvc("RootWriter")
-    rootwriter.property("Output").set({"CALIBEVT": args.user_output})
+    rootwriter.property("Output").set({"FILE1": args.user_output})
+    rootwriter.property("Output").set({"FILE2": args.user_output})
 
 
 
@@ -83,8 +84,8 @@ if __name__ == "__main__":
     #import PMTCalibAlg
     Sniper.loadDll("libPMTCalibAlg.so")
     pmtCalib=task.createAlg("PMTCalibAlg")
-    #pmtCalib.property("Step").set(args.step) 
-    #pmtCalib.property("CalibFile").set(args.calibfile)
+    pmtCalib.property("CalibMode").set(args.calibmode)
+    pmtCalib.property("CalibFile").set(args.calibfile)
     #pmtCalib.property("Store").set(args.store)
     task.show()
     task.run()

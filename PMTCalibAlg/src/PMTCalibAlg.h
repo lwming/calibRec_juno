@@ -38,7 +38,7 @@ class PMTCalibAlg: public AlgBase
     int m_totalPMT;
     double m_waveLength;
     std::string m_CalibFile;
-    std::string m_CalibStyle;
+    std::string m_CalibMode;
 
     // user's definition
     double PECounter[20000];
@@ -46,10 +46,6 @@ class PMTCalibAlg: public AlgBase
     TH1F* darkCount;
     TH1F* totalWaveCount;
     TH1F* chargeSpec[20000];
-    bool LEDCalib(std::list<JM::CalibPMTChannel*> chhlist);
-    bool EventCalib(std::list<JM::CalibPMTChannel*> chhlist);
-    bool ForceCalib(std::list<JM::CalibPMTChannel*> chhlist);
-    bool RelDECalib(std::list<JM::CalibPMTChannel*> chhlist);
 
     TTree* m_calib;
     std::vector<float> m_charge;

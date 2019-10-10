@@ -8,11 +8,11 @@
 #
 # Selection :
 use CMT v1r26 (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-branch/ExternalLibs)
-use ROOT v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface)
-use Python v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface)
-use Boost v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface)
-use SniperPolicy v0  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper)
-use SniperKernel v2  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper)
+use ROOT v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre2/ExternalInterface)
+use Python v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre2/ExternalInterface)
+use Boost v0 Externals (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre2/ExternalInterface)
+use SniperPolicy v0  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre2/sniper)
+use SniperKernel v2  (/afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre2/sniper)
 ----------> tags
 CMTv1 (from CMTVERSION)
 CMTr26 (from CMTVERSION)
@@ -53,7 +53,7 @@ sl69 (from package CMT)
 gcc494 (from package CMT)
 Unix (from package CMT) excludes [WIN32 Win32]
 ----------> CMTPATH
-# Add path /afs/ihep.ac.cn/users/y/yumiao/junofs/reconstruction/dev_juno/git_repo/calibRec_juno from initialization
-# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/offline from ProjectPath
-# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/sniper from ProjectPath
-# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J18v2r1-Pre4/ExternalInterface from ProjectPath
+# Add path /junofs/users/zhangxt/github/calibRec_juno from initialization
+# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre2/offline from ProjectPath
+# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre2/sniper from ProjectPath
+# Add path /afs/ihep.ac.cn/soft/juno/JUNO-ALL-SLC6/Pre-Release/J19v1r0-Pre2/ExternalInterface from ProjectPath
