@@ -1,4 +1,4 @@
-package TimeCorrAlg
+package TimeRec
 
 use SniperKernel v*
 use ROOT v* Externals
@@ -7,11 +7,9 @@ use RootWriter     v*   SniperSvc
 use EvtNavigator v* DataModel
 use DataRegistritionSvc v* DataModel
 use ElecEvent v* DataModel
-
-use Geometry v* Detector
-use Identifier v* Detector
+use CalibEvent v* DataModel
 use PMTCalibSvc v*
 
-library TimeCorrAlg *.cc
-apply_pattern linker_library library=TimeCorrAlg
+library TimeRec *.cc
+apply_pattern linker_library library=TimeRec
 
