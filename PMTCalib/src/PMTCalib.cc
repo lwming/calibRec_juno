@@ -21,6 +21,8 @@ Oct. 13, 2016
 #include "EvtNavigator/NavBuffer.h"
 #include "DataRegistritionSvc/DataRegistritionSvc.h"
 #include "Event/ElecHeader.h"
+#include "Event/ElecFeeCrate.h"
+#include "Event/ElecFeeChannel.h"
 #include <TFile.h>
 #include <sstream>
 #include <TF1.h>
@@ -154,12 +156,13 @@ bool PMTCalib::execute()
   LogInfo << "EvtNav: " << nav << std::endl;
   JM::ElecHeader* eh =
       dynamic_cast<JM::ElecHeader*>(nav->getHeader("/Event/Elec"));
-  //JM::ElecEvent* ee = dynamic_cast<JM::ElecEvent*>(eh->event());
-  JM::ElecEvent* ee = dynamic_cast<JM::ElecEvent*>(eh->event("JM::ElecEvent"));
+  // only use large pmts
+  if (!eh->hasEvent()) return true;
+  JM::ElecEvent* ee = dynamic_cast<JM::ElecEvent*>(eh->event());
   const JM::ElecFeeCrate& efc = ee->elecFeeCrate();
   m_crate = const_cast<JM::ElecFeeCrate*>(&efc);
-  map<int, JM::ElecFeeChannel> feeChannels = m_crate->channelData();
-  map<int, JM::ElecFeeChannel>::iterator it;
+  std::map<int, JM::ElecFeeChannel> feeChannels = m_crate->channelData();
+  std::map<int, JM::ElecFeeChannel>::iterator it;
   for (it = feeChannels.begin(); it != feeChannels.end(); ++it) {
     JM::ElecFeeChannel& channel = (it->second);
     if (channel.adc().size() == 0) {
